@@ -1,0 +1,315 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+
+
+header {
+    background: #009dff;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1 {
+    margin: 10px;
+}
+
+main {
+    padding: 20px;
+    max-width: 8000px;
+    margin: auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#search {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 60%;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#searchButton {
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#searchButton:hover {
+    background: #4a5d6a;
+}
+
+#recommendations {
+    text-align: left;
+    margin-top: 20px;
+}
+
+#moviesList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+}
+
+.movie-item p {
+    text-align: left;
+}
+
+.movie-poster {
+    float: left;
+    margin-right: 20px; /* Optional: Adds space between the poster and text */
+}
+.movie-details {
+    
+    flex: 1; /* Allows the details to take up remaining space */
+}
+
+#videoDisplay {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#videoContainer {
+    margin-top: 10px;
+}
+
+#backgroundMusic {
+    display: none; /* Hides the audio player */
+}
+
+@media (max-width: 100px) {
+    #search {
+        flex-direction: column;
+    }
+
+    #searchInput {
+        width: 70%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+.cast-list {
+    display: flex; /* Makes the cast members align horizontally */
+    justify-content: flex-end; /* Aligns the cast members to the right */
+    gap: 10px; /* Adds space between cast members */
+}
+
+.cast-member {
+    display: flex; /* Aligns the image and name horizontally */
+    flex-direction: column; /* Stacks image and name vertically */
+    align-items: center; /* Centers the content horizontally */
+    text-align: center; /* Centers the text */
+}
+
+.cast-image {
+
+    width: 50px; /* Adjust the size of the cast image */
+    height: 50px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image fits well */
+}
+
+
+.play-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* ปรับแต่งฟุตเตอร์ */
+.footer {
+    background-color: #f1f1f1;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+  }
+  
+  .footer a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .footer a:hover {
+    color: #007bff;
+  }
+  
+  .footer-social {
+    margin-top: 10px;
+  }
+  
+  .footer-social a {
+    color: #333;
+    font-size: 18px;
+    margin: 0 8px;
+  }
+  
+  .footer-social a:hover {
+    color: #007bff;
+  }
+  
+  .footer a i {
+    margin-right: 5px;
+  }
+
+/* ปรับแต่งส่วนของ trending */
+
+
+  /* Trending Sections Styles */
+  .trending-today, .trending-this-week {
+    text-align: left;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.trending-today h2, .trending-this-week h2 {
+    color: #000000;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.trending-list {
+    display: flex;
+    flex-wrap: nowrap; /* ไม่ตัดบรรทัด */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.trending-list::-webkit-scrollbar {
+    height: 10px; /* ความสูง scrollbar */
+}
+
+.trending-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.trending-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+/* */
+.trending-item {
+    
+    color: #000000;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+    margin: 5px;  /* ลด margin เพื่อให้กรอบเล็กลง */
+    width: 150px; /* ลดขนาด width ให้เล็กลง */
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+}
+
+.trending-item:hover {
+    transform: scale(1.05);
+}
+
+.trending-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ffffff;
+}
+
+.trending-item h3 {
+    font-size: 18px;  /* ปรับขนาดตัวอักษรให้เล็กลง */
+    margin: 8px;
+}
+
+.trending-item p {
+    font-size: 16px;  /* ปรับขนาดตัวอักษรให้เล็กลง */
+    margin: 5px 8px;
+}
+
+
+.hero {
+    position: relative;
+    height: 30vh;
+    background-image: url('img/winter.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input {
+    border: none;
+    padding: 10px 20px;
+    flex: 1;
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-bar button {
+    border: none;
+    padding: 10px 20px;
+    background-color: #3e8ed0;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #326ba8;
+}
+
+.build {
+    text-align: center;
+    padding: 1px;
+    background-color: #f1f1f1;
+    color: #333;
+    font-size: 14px;
+}

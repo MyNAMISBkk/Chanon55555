@@ -1,0 +1,95 @@
+/* styles.css */
+
+/* Hero Section Styling */
+.movie-hero {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)),
+                url('https://image.tmdb.org/t/p/w1280/<<your_placeholder.jpg>>') center/cover no-repeat;
+    color: white;
+    padding: 100px 0;
+    height: 100vh;
+}
+
+.movie-hero img {
+    border: 5px solid rgba(255, 255, 255, 0.7);
+}
+
+/* Cast Section: Horizontal Scrollable Without Gap */
+#movie-cast {
+    display: flex; /* จัดเรียงลูกในแนวนอน */
+    overflow-x: auto; /* เพิ่มการเลื่อนในแนวนอน */
+    scroll-behavior: smooth; /* ทำให้การเลื่อนดูนุ่มนวล */
+    gap: 16px; /* เพิ่มช่องว่างระหว่างการ์ด */
+    padding-bottom: 1rem; /* เพิ่มระยะด้านล่าง */
+}
+
+/* Remove all margin and padding from col-* (if Bootstrap is adding it) */
+#movie-cast .col-md-4,
+#movie-cast .col {
+    padding: 0 !important; /* ลบ padding */
+    margin: 0 !important; /* ลบ margin */
+}
+
+#movie-cast::-webkit-scrollbar {
+    height: 8px; /* ขนาด scrollbar */
+}
+
+#movie-cast::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); /* สี scrollbar */
+    border-radius: 4px; /* มุม scrollbar */
+}
+
+#movie-cast::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* สีพื้นหลัง scrollbar */
+}
+
+/* Cast Card Styling */
+.card {
+    flex: 0 0 auto; /* หยุดการขยายของ Flexbox */
+    width: 180px; /* กำหนดความกว้างของการ์ด */
+    border: none; /* ลบเส้นขอบ */
+    border-radius: 10px; /* ทำมุมการ์ดให้โค้ง */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* เพิ่มเงา */
+    overflow: hidden; /* ซ่อนส่วนที่เกิน */
+    text-align: center; /* จัดข้อความอยู่ตรงกลาง */
+}
+
+.card-img-top {
+    height: 220px; /* ความสูงของรูป */
+    object-fit: cover; /* ทำให้รูปไม่บิดเบี้ยว */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* เพิ่มเส้นแบ่งระหว่างรูปกับเนื้อหา */
+}
+
+.card-body {
+    padding: 10px; /* ลด padding เพื่อทำให้ดู compact */
+}
+
+.card-title {
+    font-size: 1rem; /* ขนาดตัวอักษรชื่อ */
+    font-weight: bold; /* เน้นชื่อ */
+    margin-bottom: 0.5rem; /* ระยะห่างจากข้อความล่าง */
+}
+
+.card-text {
+    font-size: 0.85rem; /* ขนาดตัวอักษรบทบาท */
+    color: #666; /* สีเทา */
+}
+
+
+
+
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-family: 'Verdana', sans-serif;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
