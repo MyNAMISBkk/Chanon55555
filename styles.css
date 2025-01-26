@@ -225,6 +225,7 @@ main {
 }
 
 .trending-item h3 {
+    cursor: pointer; 
     font-size: 18px;  /* ปรับขนาดตัวอักษรให้เล็กลง */
     margin: 8px;
 }
