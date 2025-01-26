@@ -76,10 +76,12 @@ main {
 }
 
 .movie-item p {
+    cursor: pointer; 
     text-align: left;
 }
 
 .movie-poster {
+    cursor: pointer; 
     float: left;
     margin-right: 20px; /* Optional: Adds space between the poster and text */
 }
