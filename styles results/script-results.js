@@ -36,12 +36,12 @@ if (searchQuery) {
                     `;
 
                     movieItem.addEventListener('click', () => {
-                        // ตรวจสอบว่า movie.id มีค่าและไม่เป็น undefined หรือ null
-                        if (movie && movie.id) {
-                            // สร้าง URL ที่รวม movieId เข้าไปใน query string
-                            window.location.href = `movie-details.html?id=${movie.id}`;
+                        // ตรวจสอบว่า item.id มีค่า
+                        if (item.id) {
+                            // สร้าง URL พร้อม id และ type
+                            window.location.href = `movie-details.html?id=${item.id}&type=${item.media_type}`;
                         } else {
-                            console.error('movie.id is not available');
+                            console.error("Item ID is missing");
                         }
                     });
                     

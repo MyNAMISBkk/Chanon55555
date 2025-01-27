@@ -2,55 +2,70 @@ const TMDB_API_KEY = "bc40d10ccfb7ddd6ac30ad92986a8a89"; // Replace with your TM
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-// ดึง movie_id จาก URL
-function getMovieIdFromURL() {
+// ดึง movie_id และ mediaType จาก URL
+function getParamsFromURL() {
     const params = new URLSearchParams(window.location.search);
-    return params.get("id");
+    return {
+        id: params.get("id"),
+        type: params.get("type") // 'movie' หรือ 'tv'
+    };
 }
 
-// ดึงข้อมูลภาพยนตร์จาก TMDB
-async function fetchMovieDetails(movieId) {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US`);
-    if (!response.ok) {
-        console.error("Failed to fetch movie details");
+// ดึงข้อมูลรายละเอียด (Movie หรือ TV Show)
+async function fetchDetails(id, type) {
+    try {
+        const endpoint = type === "tv" ? `/tv/${id}` : `/movie/${id}`;
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=en-US`);
+        if (!response.ok) {
+            console.error(`Failed to fetch ${type} details`);
+            return null;
+        }
+        return response.json();
+    } catch (error) {
+        console.error(`Error fetching ${type} details:`, error);
         return null;
     }
-    return response.json();
 }
 
-// ดึงรายชื่อนักแสดงจาก TMDB
-async function fetchMovieCast(movieId) {
-    const response = await fetch(`${TMDB_BASE_URL}/movie/${movieId}/credits?api_key=${TMDB_API_KEY}`);
-    if (!response.ok) {
-        console.error("Failed to fetch movie cast");
+// ดึงรายชื่อนักแสดง (Movie หรือ TV Show)
+async function fetchCast(id, type) {
+    try {
+        const endpoint = type === "tv" ? `/tv/${id}/credits` : `/movie/${id}/credits`;
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}`);
+        if (!response.ok) {
+            console.error(`Failed to fetch ${type} cast`);
+            return null;
+        }
+        const data = await response.json();
+        return data.cast.slice(0, 6); // แสดงนักแสดง 6 คนแรก
+    } catch (error) {
+        console.error(`Error fetching ${type} cast:`, error);
         return null;
     }
-    const data = await response.json();
-    return data.cast.slice(0, 6); // แสดงนักแสดง 6 คนแรก
 }
 
-// แสดงข้อมูลภาพยนตร์ในหน้า HTML
-async function renderMovieDetails() {
-    const movieId = getMovieIdFromURL();
-    if (!movieId) {
-        alert("Movie ID is missing in the URL");
+// แสดงข้อมูลใน HTML
+async function renderDetails() {
+    const { id, type } = getParamsFromURL();
+    if (!id || !type) {
+        alert("Content ID or type is missing in the URL");
         return;
     }
 
-    // ดึงข้อมูลภาพยนตร์
-    const movie = await fetchMovieDetails(movieId);
-    if (!movie) return;
+    // ดึงข้อมูลรายละเอียด
+    const details = await fetchDetails(id, type);
+    if (!details) return;
 
-    document.getElementById("movie-hero").style.backgroundImage = `linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url(${IMAGE_BASE_URL}${movie.backdrop_path})`;
-    document.getElementById("movie-poster").src = `${IMAGE_BASE_URL}${movie.poster_path}`;
-    document.getElementById("movie-title").innerText = movie.title;
-    document.getElementById("movie-genres").innerText = `Genres: ${movie.genres.map((genre) => genre.name).join(", ")}`;
-    document.getElementById("movie-release-date").innerText = `Release Date: ${movie.release_date}`;
-    document.getElementById("movie-overview").innerText = movie.overview;
-    
+    document.getElementById("movie-hero").style.backgroundImage = 
+        `linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url(${IMAGE_BASE_URL}${details.backdrop_path})`;
+    document.getElementById("movie-poster").src = `${IMAGE_BASE_URL}${details.poster_path}`;
+    document.getElementById("movie-title").innerText = details.title || details.name;
+    document.getElementById("movie-genres").innerText = `Genres: ${details.genres.map((genre) => genre.name).join(", ")}`;
+    document.getElementById("movie-release-date").innerText = `Release Date: ${details.release_date || details.first_air_date}`;
+    document.getElementById("movie-overview").innerText = details.overview;
 
     // ดึงและแสดงรายชื่อนักแสดง
-    const cast = await fetchMovieCast(movieId);
+    const cast = await fetchCast(id, type);
     if (cast) {
         const castContainer = document.getElementById("movie-cast");
         cast.forEach((actor) => {
@@ -71,4 +86,4 @@ async function renderMovieDetails() {
 }
 
 // เริ่มการแสดงข้อมูล
-document.addEventListener("DOMContentLoaded", renderMovieDetails);
+document.addEventListener("DOMContentLoaded", renderDetails);
