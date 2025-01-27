@@ -104,7 +104,6 @@ function playTrailer(itemId, mediaType) {
     const videoContainer = document.getElementById('videoContainer');
     videoContainer.innerHTML = ''; // Clear previous video
 
-    // URL สำหรับดึงข้อมูลวิดีโอ
     const videosUrl = mediaType === 'movie'
         ? `https://api.themoviedb.org/3/movie/${itemId}/videos?api_key=${apiKey}`
         : `https://api.themoviedb.org/3/tv/${itemId}/videos?api_key=${apiKey}`;
@@ -112,12 +111,8 @@ function playTrailer(itemId, mediaType) {
     fetch(videosUrl)
         .then(response => response.json())
         .then(data => {
-            if (data.results && data.results.length > 0) {
-                // เลือกวิดีโอประเภท 'Trailer' ถ้ามี
-                const trailer = data.results.find(video => video.type === 'Trailer') || data.results[0];
-                const videoId = trailer.key;
-
-                // สร้าง iframe สำหรับแสดงวิดีโอ
+            if (data.results.length > 0) {
+                const videoId = data.results[0].key; // Get the first video
                 const iframe = document.createElement('iframe');
                 iframe.width = '560';
                 iframe.height = '315';
@@ -125,10 +120,9 @@ function playTrailer(itemId, mediaType) {
                 iframe.frameBorder = '0';
                 iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
                 iframe.allowFullscreen = true;
-
-                videoContainer.appendChild(iframe); // แสดงวิดีโอใน container
+                videoContainer.appendChild(iframe);
             } else {
-                videoContainer.innerHTML = '<p>No trailer available for this content.</p>';
+                videoContainer.innerHTML = '<p>No trailer available.</p>';
             }
         })
         .catch(error => {
@@ -136,4 +130,3 @@ function playTrailer(itemId, mediaType) {
             videoContainer.innerHTML = '<p>Error fetching video. Please try again later.</p>';
         });
 }
-
