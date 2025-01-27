@@ -45,6 +45,7 @@ if (searchQuery) {
                         }
                     });
                     
+                    
                     moviesList.appendChild(movieItem);
 
                     
