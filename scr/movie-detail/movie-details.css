@@ -74,8 +74,25 @@
     color: #666; /* สีเทา */
 }
 
+/* Trailer Button Styling */
+.btn-primary {
+    background-color: #007bff; /* สีพื้นหลังของปุ่ม */
+    border: none; /* ลบเส้นขอบ */
+    color: white; /* สีตัวอักษร */
+    padding: 10px 20px; /* ระยะห่างภายในปุ่ม */
+    text-align: center; /* จัดข้อความให้อยู่ตรงกลาง */
+    text-decoration: none; /* ลบเส้นใต้ */
+    display: inline-block; /* แสดงเป็นบล็อกในบรรทัด */
+    font-size: 16px; /* ขนาดตัวอักษร */
+    margin: 10px 0; /* ระยะห่างด้านบนและล่าง */
+    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เมื่อ hover */
+    border-radius: 5px; /* ทำมุมปุ่มให้โค้ง */
+    transition: background-color 0.3s; /* เพิ่มการเปลี่ยนสีพื้นหลัง */
+}
 
-
+.btn-primary:hover {
+    background-color: #0056b3; /* สีพื้นหลังเมื่อ hover */
+}
 
 /* Global Styles */
 body {

@@ -44,6 +44,46 @@ async function fetchCast(id, type) {
     }
 }
 
+// ... existing code ...
+
+// ดึงข้อมูลตัวอย่างภาพยนตร์ (Movie หรือ TV Show)
+async function fetchTrailer(id, type) {
+    try {
+        const endpoint = type === "tv" ? `/tv/${id}/videos` : `/movie/${id}/videos`;
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=en-US`);
+        if (!response.ok) {
+            console.error(`Failed to fetch ${type} trailer`);
+            return null;
+        }
+        const data = await response.json();
+        const trailer = data.results.find(video => video.type === "Trailer" && video.site === "YouTube");
+        return trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null;
+    } catch (error) {
+        console.error(`Error fetching ${type} trailer:`, error);
+        return null;
+    }
+}
+
+// ... existing code ...
+
+async function renderDetails() {
+    // ... existing code ...
+
+    // ดึงข้อมูลตัวอย่างภาพยนตร์
+    const trailerUrl = await fetchTrailer(id, type);
+    if (trailerUrl) {
+        const trailerButton = document.createElement("button");
+        trailerButton.innerText = "Watch Trailer";
+        trailerButton.className = "btn btn-primary";
+        trailerButton.onclick = () => window.open(trailerUrl, "_blank");
+        document.getElementById("movie-details").appendChild(trailerButton);
+    }
+
+    // ... existing code ...
+}
+
+// ... existing code ...
+
 // แสดงข้อมูลใน HTML
 async function renderDetails() {
     const { id, type } = getParamsFromURL();
@@ -82,6 +122,16 @@ async function renderDetails() {
             `;
             castContainer.appendChild(castCard);
         });
+    }
+
+    // ดึงข้อมูลตัวอย่างภาพยนตร์
+    const trailerUrl = await fetchTrailer(id, type);
+    if (trailerUrl) {
+        const trailerButton = document.createElement("button");
+        trailerButton.innerText = "Watch Trailer";
+        trailerButton.className = "btn btn-primary";
+        trailerButton.onclick = () => window.open(trailerUrl, "_blank");
+        document.getElementById("movie-details").appendChild(trailerButton);
     }
 }
 

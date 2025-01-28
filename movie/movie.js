@@ -41,14 +41,15 @@ function displayMovies(movies) {
             </div>
         `;
         movieCard.addEventListener('click', () => {
-            // ตรวจสอบว่า movie.id มีค่าและไม่เป็น undefined หรือ null
-            if (movie && movie.id) {
-                // สร้าง URL ที่รวม movieId เข้าไปใน query string
-                window.location.href = `movie-details.html?id=${movie.id}`;
-            } else {
-                console.error('movie.id is not available');
-            }
-        });
+                // ตรวจสอบว่า item.id มีค่า
+                if (movie.id) {
+                    // สร้าง URL พร้อม id และ type
+                    window.location.href = `movie-details.html?id=${movie.id}&type=${movie.media_type}`;
+                } else {
+                    console.error("Item ID is missing");
+                }
+            });
+            
         
         moviesContainer.appendChild(movieCard);
     });
