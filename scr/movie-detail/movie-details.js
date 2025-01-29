@@ -44,8 +44,6 @@ async function fetchCast(id, type) {
     }
 }
 
-// ... existing code ...
-
 // ดึงข้อมูลตัวอย่างภาพยนตร์ (Movie หรือ TV Show)
 async function fetchTrailer(id, type) {
     try {
@@ -64,27 +62,23 @@ async function fetchTrailer(id, type) {
     }
 }
 
-// ... existing code ...
-
-async function renderDetails() {
-    // ... existing code ...
-
-    // ดึงข้อมูลตัวอย่างภาพยนตร์
-    const trailerUrl = await fetchTrailer(id, type);
-    if (trailerUrl) {
-        const trailerButton = document.createElement("button");
-        trailerButton.innerText = "Watch Trailer";
-        trailerButton.className = "btn btn-primary";
-        trailerButton.onclick = () => window.open(trailerUrl, "_blank");
-        document.getElementById("movie-details").appendChild(trailerButton);
+// ดึงข้อมูลบริการสตรีมมิ่ง (Movie หรือ TV Show)
+async function fetchWatchProviders(id, type) {
+    try {
+        const endpoint = type === "tv" ? `/tv/${id}/watch/providers` : `/movie/${id}/watch/providers`;
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}`);
+        if (!response.ok) {
+            console.error(`Failed to fetch ${type} watch providers`);
+            return null;
+        }
+        const data = await response.json();
+        return data.results.US || null; // Assuming you want US providers
+    } catch (error) {
+        console.error(`Error fetching ${type} watch providers:`, error);
+        return null;
     }
-
-    // ... existing code ...
 }
 
-// ... existing code ...
-
-// แสดงข้อมูลใน HTML
 async function renderDetails() {
     const { id, type } = getParamsFromURL();
     if (!id || !type) {
@@ -132,6 +126,22 @@ async function renderDetails() {
         trailerButton.className = "btn btn-primary";
         trailerButton.onclick = () => window.open(trailerUrl, "_blank");
         document.getElementById("movie-details").appendChild(trailerButton);
+    }
+
+    // ดึงข้อมูลบริการสตรีมมิ่ง
+    const watchProviders = await fetchWatchProviders(id, type);
+    if (watchProviders) {
+        const providersContainer = document.getElementById("movie-providers");
+        if (watchProviders.flatrate) {
+            providersContainer.innerHTML = `
+                <h5>Available on:</h5>
+                <ul>
+                    ${watchProviders.flatrate.map(provider => `<li>${provider.provider_name}</li>`).join('')}
+                </ul>
+            `;
+        } else {
+            providersContainer.innerHTML = "<p>No streaming providers available.</p>";
+        }
     }
 }
 
