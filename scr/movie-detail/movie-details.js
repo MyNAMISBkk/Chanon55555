@@ -62,23 +62,7 @@ async function fetchTrailer(id, type) {
     }
 }
 
-// ดึงข้อมูลบริการสตรีมมิ่ง (Movie หรือ TV Show)
-async function fetchWatchProviders(id, type) {
-    try {
-        const endpoint = type === "tv" ? `/tv/${id}/watch/providers` : `/movie/${id}/watch/providers`;
-        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}`);
-        if (!response.ok) {
-            console.error(`Failed to fetch ${type} watch providers`);
-            return null;
-        }
-        const data = await response.json();
-        return data.results.US || null; // Assuming you want US providers
-    } catch (error) {
-        console.error(`Error fetching ${type} watch providers:`, error);
-        return null;
-    }
-}
-
+// ฟังก์ชันโหลดข้อมูลภาพยนตร์และแสดงบนหน้าเว็บ
 async function renderDetails() {
     const { id, type } = getParamsFromURL();
     if (!id || !type) {
@@ -102,6 +86,7 @@ async function renderDetails() {
     const cast = await fetchCast(id, type);
     if (cast) {
         const castContainer = document.getElementById("movie-cast");
+        castContainer.innerHTML = ""; // ✅ เคลียร์ข้อมูลเดิมก่อน
         cast.forEach((actor) => {
             const castCard = document.createElement("div");
             castCard.className = "col-md-4 mb-4";
@@ -118,29 +103,21 @@ async function renderDetails() {
         });
     }
 
-    // ดึงข้อมูลตัวอย่างภาพยนตร์
+    // ดึงข้อมูลตัวอย่างหนัง (trailer)
     const trailerUrl = await fetchTrailer(id, type);
     if (trailerUrl) {
-        const trailerButton = document.createElement("button");
-        trailerButton.innerText = "Watch Trailer";
-        trailerButton.className = "btn btn-primary";
-        trailerButton.onclick = () => window.open(trailerUrl, "_blank");
-        document.getElementById("movie-details").appendChild(trailerButton);
-    }
+        const trailerButton = document.createElement("a");
+        trailerButton.href = trailerUrl;
+        trailerButton.target = "_blank";
+        trailerButton.className = "btn btn-danger mt-3"; // ใช้ปุ่ม Bootstrap
+        trailerButton.innerHTML = "🎬 Watch Trailer";
 
-    // ดึงข้อมูลบริการสตรีมมิ่ง
-    const watchProviders = await fetchWatchProviders(id, type);
-    if (watchProviders) {
-        const providersContainer = document.getElementById("movie-providers");
-        if (watchProviders.flatrate) {
-            providersContainer.innerHTML = `
-                <h5>Available on:</h5>
-                <ul>
-                    ${watchProviders.flatrate.map(provider => `<li>${provider.provider_name}</li>`).join('')}
-                </ul>
-            `;
+        // ใส่ปุ่มไว้ใต้ชื่อหนัง
+        const movieDetails = document.getElementById("movie-details");
+        if (movieDetails) {
+            movieDetails.appendChild(trailerButton);
         } else {
-            providersContainer.innerHTML = "<p>No streaming providers available.</p>";
+            console.error("movie-details element not found");
         }
     }
 }

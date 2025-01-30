@@ -90,3 +90,40 @@ function fetchCastInfo(itemId, mediaType) {
         .catch(error => console.error('Error fetching cast data:', error));
 }
 
+// Function to play trailer
+function playTrailer(itemId, mediaType) {
+    const videoContainer = document.getElementById('videoContainer');
+    videoContainer.innerHTML = ''; // Clear previous video
+
+    // URL สำหรับดึงข้อมูลวิดีโอ
+    const videosUrl = mediaType === 'movie'
+        ? `https://api.themoviedb.org/3/movie/${itemId}/videos?api_key=${apiKey}`
+        : `https://api.themoviedb.org/3/tv/${itemId}/videos?api_key=${apiKey}`;
+
+    fetch(videosUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.results && data.results.length > 0) {
+                // เลือกวิดีโอประเภท 'Trailer' ถ้ามี
+                const trailer = data.results.find(video => video.type === 'Trailer') || data.results[0];
+                const videoId = trailer.key;
+
+                // สร้าง iframe สำหรับแสดงวิดีโอ
+                const iframe = document.createElement('iframe');
+                iframe.width = '560';
+                iframe.height = '315';
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`; // Auto-play and mute
+                iframe.frameBorder = '0';
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+
+                videoContainer.appendChild(iframe); // แสดงวิดีโอใน container
+            } else {
+                videoContainer.innerHTML = '<p>No trailer available for this content.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching video data from TMDB:', error);
+            videoContainer.innerHTML = '<p>Error fetching video. Please try again later.</p>';
+        });
+}
