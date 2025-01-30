@@ -30,8 +30,7 @@ if (searchQuery) {
                             <p>Release Date: ${releaseDate}</p>
                             <p>User Score: ${item.vote_average} / 10</p>
                             <p>${item.overview}</p>
-                            <button class="play-button" data-id="${item.id}" data-type="${item.media_type}">Play Trailer</button>
-                            <div class="cast-info" id="cast-${item.id}"></div>
+
                         </div>
                     `;
 
@@ -55,15 +54,7 @@ if (searchQuery) {
                     fetchCastInfo(item.id, item.media_type);
                 });
 
-                // Add event listeners to play buttons
-                const playButtons = document.querySelectorAll('.play-button');
-                playButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        const itemId = this.getAttribute('data-id');
-                        const mediaType = this.getAttribute('data-type');
-                        playTrailer(itemId, mediaType);
-                    });
-                });
+                
             } else {
                 moviesList.innerHTML = '<p>No results found.</p>';
             }
@@ -99,34 +90,3 @@ function fetchCastInfo(itemId, mediaType) {
         .catch(error => console.error('Error fetching cast data:', error));
 }
 
-// Function to play trailer
-function playTrailer(itemId, mediaType) {
-    const videoContainer = document.getElementById('videoContainer');
-    videoContainer.innerHTML = ''; // Clear previous video
-
-    const videosUrl = mediaType === 'movie'
-        ? `https://api.themoviedb.org/3/movie/${itemId}/videos?api_key=${apiKey}`
-        : `https://api.themoviedb.org/3/tv/${itemId}/videos?api_key=${apiKey}`;
-
-    fetch(videosUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.results.length > 0) {
-                const videoId = data.results[0].key; // Get the first video
-                const iframe = document.createElement('iframe');
-                iframe.width = '560';
-                iframe.height = '315';
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`; // Auto-play and mute
-                iframe.frameBorder = '0';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-                videoContainer.appendChild(iframe);
-            } else {
-                videoContainer.innerHTML = '<p>No trailer available.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching video data from TMDB:', error);
-            videoContainer.innerHTML = '<p>Error fetching video. Please try again later.</p>';
-        });
-}
