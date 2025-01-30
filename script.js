@@ -268,15 +268,3 @@ toggleMusicButton.addEventListener('click', function() {
 
 
 });
-
-function updateUsersOnline() {
-    // จำลองจำนวนผู้ใช้ที่ออนไลน์ (0-100)
-    const onlineUsers = Math.floor(Math.random() * 101);
-    document.getElementById('usersOnline').innerText = onlineUsers;
-}
-
-// เรียกใช้ฟังก์ชันทุก ๆ 5 วินาที
-setInterval(updateUsersOnline, 5000);
-
-// เรียกใช้ฟังก์ชันครั้งแรกเมื่อโหลดหน้า
-updateUsersOnline();

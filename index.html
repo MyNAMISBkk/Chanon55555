@@ -99,6 +99,19 @@
           <p>
             <p></p>
             <p>Users online: <span id="usersOnline">0</span></p>
+<script>
+    function simulateUsersOnline() {
+        // สุ่มจำนวนผู้ใช้ที่ออนไลน์ระหว่าง 1 ถึง 100
+        const usersOnline = Math.floor(Math.random() * 100) + 1;
+        document.getElementById('usersOnline').textContent = usersOnline;
+    }
+
+    // 
+    setInterval(simulateUsersOnline, 50000);
+
+    // เรียกใช้ครั้งแรกเมื่อโหลดหน้า
+    simulateUsersOnline();
+</script>
             <!--a href="https://status.themoviedb.org/">Service Status</a-->
 
         <p><strong>Note:</strong> This website is for educational purposes only.</p>
