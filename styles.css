@@ -279,7 +279,7 @@ main {
 .search-bar button {
     border: none;
     padding: 10px 20px;
-    background-color: #3e8ed0;
+    background-color: #ff000d;
     color: white;
     font-size: 1rem;
     cursor: pointer;
@@ -287,7 +287,7 @@ main {
 
 .search-bar button:hover {
     cursor: pointer; 
-    background-color: #326ba8;
+    background-color: #ff0000;
 }
 
 .build {
@@ -296,4 +296,60 @@ main {
     background-color: #f1f1f1;
     color: #333;
     font-size: 14px;
+}
+
+
+
+
+.movie-item {
+    display: flex;
+    align-items: flex-start;
+    background-color: #f8f9fa;
+    padding: 20px;
+
+}
+
+.movie-poster {
+    cursor: pointer; 
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 8px;
+}
+
+.movie-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+    .movie-details h3 {
+        margin: 0 0 10px;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+
+
+.play-trailer {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 5px 10px; /* Reduced padding */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px; /* Smaller font size */
+}
+
+.play-trailer:hover {
+    background-color: #0056b3;
+}
+
+.overview {
+    cursor: pointer;
+    color: #007bff;
+    white-space: normal; /* Allows text to wrap */
+    overflow: visible; /* Ensures text is not clipped */
 }

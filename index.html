@@ -86,6 +86,62 @@
             </div>
         </div>
 
+        <div class="recommended-movies">
+            <h2>Recommended Movies</h2>
+            <div class="recommended-list">
+                <div class="movie-item">
+                    <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/6z51LzXG5He3mLqdZgeWUJ3KbTT.jpg" alt="Movie Title 1" class="movie-poster">
+                <div class="movie-details">
+                    <h3>มิกกี้ 17 (2025)</h3>
+                    <p>Genre: Sci-Fi, Drama</p>
+                    <p>Duration: 2h 17m</p>
+                    <p>Overview: มิกกี้ บาร์เกิล...</p>
+                    <button class="play-trailer" data-trailer-url="https://youtu.be/adbw958abjs?si=2OeKOG_0mqBE0lP9">Play Trailer</button>
+                
+                </div>
+                <div class="movie-item">
+                    <img src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/sb1LVEd3JarZPX4NwA38DmWyOc3.jpg" alt="Movie Title 2" class="movie-poster">
+                <div class="movie-details">
+                    <h3>สวยสลับร่าง (2024)</h3>
+                    <p>Genre: สยองขวัญ, นิยายวิทยาศาสตร์</p>
+                    <p>Duration: 2h 21m</p>
+                    <p>Overview: นักแสดงหญิงที่กำลัง..</p>
+                    <button class="play-trailer" data-trailer-url="https://youtu.be/lR5nlovVgvQ">Play Trailer</button>
+                
+                </div>
+                <div class="movie-item">
+                    <img src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/9jwVu85QYSbcDiUFpPDgHEiXjOJ.jpg" alt="Movie Title 3" class="movie-poster">
+                <div class="movie-details">
+                    <h3>มหัศจรรย์อารมณ์อลเวง 2 (2024)</h3>
+                    <p>Genre: แอนนิเมชั่น, ผจญ, ตลก, ครอบครัว</p>
+                    <p>Duration: 1h 35m</p>
+                    <p>Overview: เดินทางกลับสู่โลกของเสียงเล็ก ๆ..</p>
+                    <button class="play-trailer" data-trailer-url="https://www.youtube.com/watch?v=0LYs4v1TxEE">Play Trailer</button>
+                
+                </div>
+                <div class="movie-item">
+                    <img src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/f3i5wNNN3vtMFCq45cosxMUVFbM.jpg" alt="Movie Title 4" class="movie-poster">
+                <div class="movie-details">
+                    <h3>มหัศจรรย์อารมณ์อลเวง 2 (2024)</h3>
+                    <p>Genre: บู๊, ตลก, นิยายวิทยาศาสตร์</p>
+                    <p>Duration: 2h 8m</p>
+                    <p>Overview: ในขณะที่ วูลฟ์เวอร์รีน ผู้เหนื่อยล้ากำลัง...</p>
+                    <button class="play-trailer" data-trailer-url="https://www.youtube.com/watch?v=73_1biulkYk">Play Trailer</button>
+                
+                </div>
+                <div class="movie-item">
+                    <img src="https://media.themoviedb.org/t/p/w300_and_h450_bestv2/q8dWfc4JwQuv3HayIZeO84jAXED.jpg" alt="Movie Title 5" class="movie-poster">
+                <div class="movie-details">
+                    <h3>เด็กซเตอร์ เชือดพิทักษ์คุณธรรม</h3>
+                    <p>Genre: อาชญากรรม, หนังชีวิต, ลึกลับ</p>
+                    <p>Duration: -h -m </p>
+                    <p>Overview: ตอนกลางวันเด็กซ์เตอร์ทำงาน...</p>
+                    <button class="play-trailer" data-trailer-url="https://youtu.be/YQeUmSD1c3g">Play Trailer</button>
+                
+                </div>
+            </div>
+        </div>
+
         <!--audio id="backgroundMusic" loop>
             <source src="music/diddy.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
@@ -122,5 +178,24 @@
         <p>Build beta</p>
     </div>
       <script src="script.js"></script>
+      <script>
+        document.querySelectorAll('.overview').forEach(overview => {
+    overview.addEventListener('click', function() {
+        if (this.classList.contains('full')) {
+            this.textContent = 'Overview: ' + this.dataset.fullText.substring(0, 50) + '...';
+            this.classList.remove('full');
+        } else {
+            this.textContent = 'Overview: ' + this.dataset.fullText;
+            this.classList.add('full');
+        }
+    });
+});
+        document.querySelectorAll('.play-trailer').forEach(button => {
+    button.addEventListener('click', function() {
+        const trailerUrl = this.dataset.trailerUrl;
+        window.open(trailerUrl, '_blank');
+    });
+});
+    </script>
 </body>
 </html>
