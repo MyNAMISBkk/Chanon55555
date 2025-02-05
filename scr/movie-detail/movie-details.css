@@ -1,5 +1,25 @@
 /* styles.css */
 
+/* สำหรับหน้าจอที่กว้างไม่เกิน 600px (มือถือ) */
+@media (max-width: 600px) {
+    /* ตัวอย่าง: ปรับขนาดฟอนต์และการจัดวาง */
+    body {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .container {
+        width: 100%;
+        padding: 0;
+    }
+    /* ปรับสไตล์อื่นๆ ตามต้องการ */
+}
+
+img, video {
+    max-width: 100%;
+    height: auto;
+}
+
+
 /* Hero Section Styling */
 .movie-hero {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4)),

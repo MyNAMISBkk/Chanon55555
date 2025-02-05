@@ -12,7 +12,24 @@ body {
     line-height: 1.6;
 }
 
+/* สำหรับหน้าจอที่กว้างไม่เกิน 600px (มือถือ) */
+@media (max-width: 600px) {
+    /* ตัวอย่าง: ปรับขนาดฟอนต์และการจัดวาง */
+    body {
+        font-size: 14px;
+        padding: 10px;
+    }
+    .container {
+        width: 100%;
+        padding: 0;
+    }
+    /* ปรับสไตล์อื่นๆ ตามต้องการ */
+}
 
+img, video {
+    max-width: 100%;
+    height: auto;
+}
 
 
 header {
