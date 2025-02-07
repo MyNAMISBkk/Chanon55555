@@ -29,7 +29,7 @@ if (searchQuery) {
                             <p>Type: ${mediaType}</p>
                             <p>Release Date: ${releaseDate}</p>
                             <p>User Score: ${item.vote_average} / 10</p>
-                            <p>${item.overview}</p>
+
 
                         </div>
                     `;
