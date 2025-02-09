@@ -222,6 +222,7 @@ function playTrailer(movieId) {
 
 
 
+
 const backgroundMusic = document.getElementById('backgroundMusic');
 const toggleMusicButton = document.getElementById('toggleMusicButton');
 
