@@ -10,7 +10,8 @@ function formatDate(dateString) {
 
 
 function fetchTrendingData() {
-    const trendingTodayUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}`;
+    const trendingTodayUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}&language=th-TH`;
+
 
     fetch(trendingTodayUrl)
         .then(response => response.json())

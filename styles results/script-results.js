@@ -10,7 +10,7 @@ function getQueryParam(param) {
 // Fetch and display search results
 const searchQuery = getQueryParam('query');
 if (searchQuery) {
-    fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}`)
+    fetch(`https://api.themoviedb.org/3/search/multi?api_key=${apiKey}&language=th-TH&query=${encodeURIComponent(searchQuery)}`)
         .then(response => response.json())
         .then(data => {
             const moviesList = document.getElementById('moviesList');
@@ -68,8 +68,8 @@ if (searchQuery) {
 // Function to fetch cast information
 function fetchCastInfo(itemId, mediaType) {
     const creditsUrl = mediaType === 'movie'
-        ? `https://api.themoviedb.org/3/movie/${itemId}/credits?api_key=${apiKey}`
-        : `https://api.themoviedb.org/3/tv/${itemId}/credits?api_key=${apiKey}`;
+        ? `https://api.themoviedb.org/3/movie/${itemId}/credits?api_key=${apiKey}&language=th-TH`
+        : `https://api.themoviedb.org/3/tv/${itemId}/credits?api_key=${apiKey}&language=th-TH`;
 
     fetch(creditsUrl)
         .then(response => response.json())

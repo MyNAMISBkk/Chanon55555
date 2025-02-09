@@ -15,7 +15,7 @@ function getParamsFromURL() {
 async function fetchDetails(id, type) {
     try {
         const endpoint = type === "tv" ? `/tv/${id}` : `/movie/${id}`;
-        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=en-US`);
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=th-TH`);
         if (!response.ok) {
             console.error(`Failed to fetch ${type} details`);
             return null;
@@ -48,7 +48,7 @@ async function fetchCast(id, type) {
 async function fetchTrailer(id, type) {
     try {
         const endpoint = type === "tv" ? `/tv/${id}/videos` : `/movie/${id}/videos`;
-        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=en-US`);
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=th-TH`);
         if (!response.ok) {
             console.error(`Failed to fetch ${type} trailer`);
             return null;
