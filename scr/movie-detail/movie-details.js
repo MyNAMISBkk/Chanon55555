@@ -54,7 +54,21 @@ async function fetchTrailer(id, type) {
             return null;
         }
         const data = await response.json();
-        const trailer = data.results.find(video => video.type === "Trailer" && video.site === "YouTube");
+        // ค้นหา trailer ที่เป็นภาษาไทยก่อน
+        let trailer = data.results.find(video => 
+            video.type === "Trailer" && 
+            video.site === "YouTube" && 
+            video.iso_639_1 === "th"
+        );
+        
+        // ถ้าไม่มี trailer ภาษาไทย ให้ใช้ภาษาอังกฤษ
+        if (!trailer) {
+            trailer = data.results.find(video => 
+                video.type === "Trailer" && 
+                video.site === "YouTube"
+            );
+        }
+        
         return trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null;
     } catch (error) {
         console.error(`Error fetching ${type} trailer:`, error);
@@ -81,6 +95,22 @@ async function renderDetails() {
     document.getElementById("movie-genres").innerText = `Genres: ${details.genres.map((genre) => genre.name).join(", ")}`;
     document.getElementById("movie-release-date").innerText = `Release Date: ${details.release_date || details.first_air_date}`;
     document.getElementById("movie-overview").innerText = details.overview;
+
+    // เพิ่มการแสดงคะแนน
+    const rating = details.vote_average.toFixed(1);
+    const voteCount = details.vote_count.toLocaleString();
+    document.getElementById("movie-rating").textContent = rating;
+    document.getElementById("rating-count").textContent = `${voteCount} ratings`;
+
+    // ปรับสีของ rating circle ตามคะแนน
+    const ratingCircle = document.querySelector('.rating-circle');
+    if (rating >= 8) {
+        ratingCircle.style.background = 'linear-gradient(45deg, #00c853, #69f0ae)';
+    } else if (rating >= 6) {
+        ratingCircle.style.background = 'linear-gradient(45deg, #ffd600, #ffff00)';
+    } else {
+        ratingCircle.style.background = 'linear-gradient(45deg, #d50000, #ff1744)';
+    }
 
     // ดึงและแสดงรายชื่อนักแสดง
     const cast = await fetchCast(id, type);
@@ -109,12 +139,13 @@ async function renderDetails() {
         const trailerButton = document.createElement("a");
         trailerButton.href = trailerUrl;
         trailerButton.target = "_blank";
-        trailerButton.className = "btn btn-danger mt-3"; // ใช้ปุ่ม Bootstrap
-        trailerButton.innerHTML = "🎬 Watch Trailer";
+        trailerButton.className = "play-trailer";
+        trailerButton.textContent = "Watch Trailer";
 
-        // ใส่ปุ่มไว้ใต้ชื่อหนัง
         const movieDetails = document.getElementById("movie-details");
         if (movieDetails) {
+            // เคลียร์เนื้อหาเดิม (ถ้ามี)
+            movieDetails.innerHTML = '';
             movieDetails.appendChild(trailerButton);
         } else {
             console.error("movie-details element not found");

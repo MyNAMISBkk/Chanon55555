@@ -1,11 +1,12 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    color: #fff;
     display: flex;
+    min-height: 100vh;
 }
 
 h1, h2, h3 {
@@ -36,18 +37,21 @@ img, video {
 /* Sidebar Styles */
 .sidebar {
     width: 250px;
-    background-color: #333;
-    color: white;
-    padding: 20px;
+    background: rgba(25, 25, 25, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 30px 20px;
     height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .sidebar h2 {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    color: #e50914;
+    font-weight: 600;
 }
 
 .sidebar ul {
@@ -61,86 +65,104 @@ img, video {
 }
 
 .sidebar ul li a {
-    color: white;
+    color: #fff;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     display: block;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    padding: 12px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
 
 .sidebar ul li a:hover {
-    background-color: #555;
+    background: rgba(229, 9, 20, 0.1);
+    transform: translateX(5px);
 }
 
 .sidebar ul li a.active {
-    background-color: #e50914;
+    background: #e50914;
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
 }
 
 /* Main Content Styles */
 .main-content {
     margin-left: 250px;
-    padding: 20px;
+    padding: 30px;
     width: calc(100% - 250px);
 }
 
-/* Movies List (Horizontal Layout) */
+/* Movies List */
 .movies-list {
     display: flex;
-    flex-wrap: nowrap; /* ไม่ตัดบรรทัด */
-    overflow-x: auto; /* เพิ่ม scroll ในแนวนอน */
-    gap: 20px; /* ช่องว่างระหว่างรายการ */
-    padding: 20px; /* เพิ่มระยะขอบ */
-    scroll-snap-type: x mandatory; /* Snap แบบแนวนอน */
+    flex-wrap: nowrap;
+    gap: 25px;
+    padding: 20px 0;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
 
+/* Customize scrollbar */
 .movies-list::-webkit-scrollbar {
-    height: 10px; /* ความสูง scrollbar */
+    height: 8px;
+}
+
+.movies-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
 }
 
 .movies-list::-webkit-scrollbar-thumb {
-    background: #ccc;
+    background: #e50914;
     border-radius: 10px;
 }
 
-.movies-list::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-}
-
+/* Movie Item Card */
 .movie-item {
-    flex: 0 0 auto; /* ทำให้คงขนาดในแนวนอน */
-    scroll-snap-align: start; /* Snap ตำแหน่งรายการ */
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 0 0 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s ease;
-    width: 300px; /* กำหนดขนาดรายการ */
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    scroll-snap-align: start;
 }
 
 .movie-item:hover {
-    transform: scale(1.05); /* ขยายเล็กน้อยเมื่อ hover */
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(229, 9, 20, 0.2);
+    border-color: rgba(229, 9, 20, 0.5);
 }
 
 .movie-poster {
     width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ddd;
+    height: 450px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.movie-item:hover .movie-poster {
+    transform: scale(1.05);
 }
 
 .movie-details {
-    padding: 15px;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
 }
 
 .movie-details h3 {
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
     margin-bottom: 10px;
+    color: #fff;
 }
 
 .movie-details p {
     font-size: 14px;
-    margin: 5px 0;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 8px 0;
 }
 
 
@@ -232,30 +254,49 @@ img, video {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+
     .sidebar {
         width: 100%;
         height: auto;
         position: relative;
+        padding: 20px;
     }
 
     .main-content {
         margin-left: 0;
         width: 100%;
+        padding: 20px;
     }
 
-    .search-container input[type="text"] {
-        width: 100%;
-        margin-bottom: 10px;
+    .movies-list {
+        gap: 15px;
+        padding: 10px 0;
     }
 
-    .movies-list,
-    .recommendations-list {
-        flex-direction: column;
-        align-items: center;
+    .movie-item {
+        flex: 0 0 250px;
     }
 
-    .movie-item,
-    .recommendation-item {
-        width: 90%;
+    .movie-poster {
+        height: 375px;
     }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.movie-item {
+    animation: fadeIn 0.6s ease forwards;
 }
