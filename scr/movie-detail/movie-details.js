@@ -76,6 +76,31 @@ async function fetchTrailer(id, type) {
     }
 }
 
+// เพิ่มฟังก์ชันสำหรับดึงและแสดงรีวิว
+async function fetchReviews(id, type) {
+    try {
+        const endpoint = type === "tv" ? `/tv/${id}/reviews` : `/movie/${id}/reviews`;
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}`);
+        const data = await response.json();
+        return data.results;
+    } catch (error) {
+        console.error('Error fetching reviews:', error);
+        return [];
+    }
+}
+
+async function fetchSimilarContent(id, type) {
+    try {
+        const endpoint = type === "tv" ? `/tv/${id}/similar` : `/movie/${id}/similar`;
+        const response = await fetch(`${TMDB_BASE_URL}${endpoint}?api_key=${TMDB_API_KEY}&language=th-TH`);
+        const data = await response.json();
+        return data.results.slice(0, 6); // แสดง 6 รายการ
+    } catch (error) {
+        console.error('Error fetching similar content:', error);
+        return [];
+    }
+}
+
 // ฟังก์ชันโหลดข้อมูลภาพยนตร์และแสดงบนหน้าเว็บ
 async function renderDetails() {
     const { id, type } = getParamsFromURL();
@@ -151,7 +176,41 @@ async function renderDetails() {
             console.error("movie-details element not found");
         }
     }
+
+    // เพิ่มในฟังก์ชัน renderDetails()
+    const reviews = await fetchReviews(id, type);
+    if (reviews.length > 0) {
+        const reviewsContainer = document.getElementById("movie-reviews");
+        reviewsContainer.innerHTML = reviews.map(review => `
+            <div class="review-card">
+                <h4>${review.author}</h4>
+                <p>${review.content}</p>
+            </div>
+        `).join('');
+    }
 }
 
 // เริ่มการแสดงข้อมูล
 document.addEventListener("DOMContentLoaded", renderDetails);
+
+function addToWatchlist(id, type, title, poster) {
+    let watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    watchlist.push({ id, type, title, poster });
+    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+    alert('เพิ่มในรายการที่ต้องการดูแล้ว!');
+}
+
+function addShareButtons() {
+    const url = window.location.href;
+    const shareContainer = document.createElement('div');
+    shareContainer.className = 'share-buttons';
+    shareContainer.innerHTML = `
+        <button onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=${url}')">
+            Share on Facebook
+        </button>
+        <button onclick="window.open('https://twitter.com/intent/tweet?url=${url}')">
+            Share on Twitter
+        </button>
+    `;
+    document.getElementById('movie-details').appendChild(shareContainer);
+}
