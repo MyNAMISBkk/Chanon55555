@@ -7,14 +7,16 @@ let currentPage = 1;
 // Fetch movies based on filters
 async function fetchMovies() {
     const genres = document.getElementById('genres').value;
-    const certification = document.getElementById('certification').value;
-    const language = document.getElementById('language').value;
-    const minVotes = document.getElementById('min-votes').value;
-    const minRuntime = document.getElementById('min-runtime').value;
-    const maxRuntime = document.getElementById('max-runtime').value;
+    const year = document.getElementById('release-year').value;
     const userScore = document.getElementById('user-score').value;
+    const certification = document.getElementById('certification').value;
 
-    const url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&page=${currentPage}&with_genres=${genres}&certification=${certification}&with_original_language=${language}&vote_average.gte=${userScore}&vote_count.gte=${minVotes}&with_runtime.gte=${minRuntime}&with_runtime.lte=${maxRuntime}`;
+    let url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&page=${currentPage}`;
+    
+    if (genres) url += `&with_genres=${genres}`;
+    if (year) url += `&primary_release_year=${year}`;
+    if (userScore > 0) url += `&vote_average.gte=${userScore}`;
+    if (certification) url += `&certification_country=US&certification=${certification}`;
 
     try {
         const response = await fetch(url);
@@ -55,9 +57,40 @@ function displayMovies(movies) {
     });
 }
 
-// Event Listeners
-document.getElementById('apply-filters').addEventListener('click', () => {
-    currentPage = 1;
+// Event Listeners for filters
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener for year select
+    document.getElementById('release-year').addEventListener('change', () => {
+        currentPage = 1;
+        fetchMovies();
+    });
+
+    // Event listener for genres select
+    document.getElementById('genres').addEventListener('change', () => {
+        currentPage = 1;
+        fetchMovies();
+    });
+
+    // Event listener for certification select
+    document.getElementById('certification').addEventListener('change', () => {
+        currentPage = 1;
+        fetchMovies();
+    });
+
+    // Event listener for user score range
+    const userScore = document.getElementById('user-score');
+    const scoreValue = document.getElementById('score-value');
+    
+    userScore.addEventListener('input', function() {
+        scoreValue.textContent = this.value;
+    });
+
+    userScore.addEventListener('change', () => {
+        currentPage = 1;
+        fetchMovies();
+    });
+
+    // Initial fetch
     fetchMovies();
 });
 
@@ -70,6 +103,3 @@ document.getElementById('prev-page').addEventListener('click', () => {
     if (currentPage > 1) currentPage--;
     fetchMovies();
 });
-
-// Initial fetch
-fetchMovies();

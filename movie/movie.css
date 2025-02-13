@@ -82,9 +82,78 @@ img, video {
     background-color: #0056b3;
 }
 
+/* ปรับแต่ง Filters */
 aside {
     background: #fff;
     padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+aside h2 {
+    color: #1a1a1a;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e50914;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-select, .form-range {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e1e1e1;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #e50914;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.1);
+}
+
+/* ปรับแต่ง Range Slider */
+.form-range {
+    -webkit-appearance: none;
+    height: 8px;
+    background: #e1e1e1;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.form-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #e50914;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    aside {
+        margin-bottom: 20px;
+    }
+    
+    .form-select, .form-range {
+        padding: 8px;
+    }
 }
